@@ -10,8 +10,8 @@
 
 User.create(name: "Kate Godwin", email: "kate@god.win", password: "hello")
 
-Project.create(due_date: "10/4/2022", name: "Jones Wedding", kind: "wedding invites", description: "Custom Letterpress Invite Suite", user_id: 1)
-Project.create(due_date: "10/5/2023", name: "James Wedding", kind: "wedding invites", description: "Custom Letterpress Invite Suite", user_id: 1)
+Project.create(due_date: "10/4/2022", name: "Jones Wedding", kind: "wedding invites")
+Project.create(due_date: "10/5/2023", name: "James Wedding", kind: "wedding invites")
 
 Milestone.create(lead_time: "30", name: "ship invites", description: "invites must be shipped by this date", project_id: 1)
 Milestone.create(lead_time: "120", name: "present proofs", description: "give customer time to review and suggest changes", project_id: 1)

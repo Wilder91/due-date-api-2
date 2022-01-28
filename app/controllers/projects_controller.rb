@@ -15,4 +15,11 @@ class ProjectsController < ApplicationController
             render json: projects 
         end
     end
+
+    def create 
+        project = Project.find_or_create_by(name: params[:name])
+        project.kind  = params[:kind] 
+        project.due_date = params[:date]
+        project.save
+    end
 end
