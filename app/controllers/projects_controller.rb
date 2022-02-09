@@ -22,4 +22,12 @@ class ProjectsController < ApplicationController
         project.due_date = params[:date]
         project.save
     end
+
+    def delete 
+        #binding.pry
+        project = Project.find_by(id: params[:id])
+        #binding.pry
+        project.destroy
+
+    end
 end
