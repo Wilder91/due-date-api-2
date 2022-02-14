@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
     end 
 
     def index 
+        #binding.pry
         projects = Project.all 
         if projects 
             render json: projects 
@@ -18,8 +19,11 @@ class ProjectsController < ApplicationController
 
     def create 
         project = Project.find_or_create_by(name: params[:name])
+        user = User.find_by(email: params[:user])
         project.kind  = params[:kind] 
         project.due_date = params[:date]
+        project.user_id = user.id
+        #binding.pry
         project.save
     end
 
