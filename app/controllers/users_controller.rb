@@ -16,8 +16,7 @@ class UsersController < ApplicationController
 
     def create 
         user = User.find_by(email: params[:email])
-        if user
-            #binding.pry 
+        if user 
             user_id = user.id
         else 
             #binding.pry

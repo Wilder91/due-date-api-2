@@ -14,11 +14,13 @@ class MilestonesController < ApplicationController
     end
 
     def create 
+        
         milestone = Milestone.new 
         milestone.name = params[:name]
         milestone.description = params[:description]
         milestone.project_id = params[:project_id]
         milestone.due_date = milestone.project.due_date - params[:lead_time].to_i
+        #binding.pry
         milestone.save
         render json: milestone
     end

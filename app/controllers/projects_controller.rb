@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
     end
 
     def create 
+        #binding.pry
         project = Project.find_or_create_by(name: params[:name])
         user = User.find_by(email: params[:user])
         project.kind  = params[:kind] 
