@@ -24,6 +24,7 @@ class UsersController < ApplicationController
             user.email = params[:email]
             user.name = params[:name]
             user.save
+            user_id = user.id
         end
     end
 

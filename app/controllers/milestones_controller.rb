@@ -9,12 +9,13 @@ class MilestonesController < ApplicationController
     end
 
     def index 
+        #binding.pry
         milestones = Milestone.all 
         render json: milestones
     end
 
     def create 
-        
+        #binding.pry
         milestone = Milestone.new 
         milestone.name = params[:name]
         milestone.description = params[:description]
@@ -22,7 +23,8 @@ class MilestonesController < ApplicationController
         milestone.due_date = milestone.project.due_date - params[:lead_time].to_i
         #binding.pry
         milestone.save
-        render json: milestone
+        milestones = Milestone.all
+        render json: milestones
     end
 
     def project_index 
