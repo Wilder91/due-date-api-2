@@ -10,7 +10,7 @@ class MilestonesController < ApplicationController
 
     def index 
         #binding.pry
-        milestones = Milestone.all 
+        milestones = Milestone.all.sort { |a,b| a.due_date <=> b.due_date } 
         render json: milestones
     end
 
