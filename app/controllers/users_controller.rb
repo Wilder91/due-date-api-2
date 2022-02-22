@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
     def show 
-        #binding.pry
         user = User.find_by(id: params[:id])
         if user 
             render json: user
@@ -10,40 +9,35 @@ class UsersController < ApplicationController
         end 
     end 
 
-    def login 
-        user = user.find_by(email: params[:email])
-    end
-
     def create 
+        #binding.pry
         user = User.find_by(email: params[:email])
         if user 
             user_id = user.id
         else 
-            #binding.pry
             user = User.new
             user.email = params[:email]
             user.name = params[:name]
             user.save
-            user_id = user.id
         end
     end
 
-    def milestones 
-        user = User.find_by(id: params[:id])
-        milestones = user.milestones
-        render json: milestones
-    end
+    
 
-    def projects 
-        user = User.find_by(id: params[:id])
-        projects = user.projects 
-        render json: projects
-    end
+    
 
     def index 
         users = User.all
         render json: users
     end
+
+    private
+
+    def user_params 
+        params.require(:user).permit(:name, :email)
+    end
+
+
 
     
 end

@@ -10,7 +10,6 @@ class ProjectsController < ApplicationController
     end 
 
     def index 
-        #binding.pry
         projects = Project.all.sort { |a,b| a.due_date <=> b.due_date } 
         if projects 
             render json: projects 
@@ -18,21 +17,33 @@ class ProjectsController < ApplicationController
     end
    
     def create 
+        project = Project.create(project_params)
         #binding.pry
-        project = Project.find_or_create_by(name: params[:name])
-        user = User.find_by(email: params[:user])
-        project.kind  = params[:kind] 
-        project.due_date = Date.parse(params[:date])
-        project.user_id = user.id
-        #binding.pry
-        project.save
     end
 
     def delete 
-        #binding.pry
         project = Project.find_by(id: params[:id])
         project.milestones.destroy
         project.destroy
 
+    end
+
+    def update 
+        project = Project.find_by(id: params[:id])
+        project.update(name: params[:project][:name], kind: params[:project][:kind], due_date: params[:project][:due_date])
+    end
+
+    def user_projects 
+        user = User.find_by(id: params[:id])
+    
+        projects = user.projects.all.sort { |a,b| a.due_date <=> b.due_date } 
+        render json: projects
+    end
+
+    private 
+
+    def project_params 
+        params.require(:project).permit(:name, :kind, :due_date, :user_id)
+ 
     end
 end

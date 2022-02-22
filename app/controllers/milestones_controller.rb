@@ -9,18 +9,16 @@ class MilestonesController < ApplicationController
     end
 
     def index 
-        #binding.pry
         milestones = Milestone.all.sort { |a,b| a.due_date <=> b.due_date } 
         render json: milestones
     end
 
     def create 
-        #binding.pry
         milestone = Milestone.new 
         milestone.name = params[:name]
         milestone.description = params[:description]
         milestone.project_id = params[:project_id]
-        milestone.due_date = milestone.project.due_date - params[:lead_time].to_i
+        milestone.due_date = milestone.project.due_date - params[:due_date].to_i
         #binding.pry
         milestone.save
         milestones = Milestone.all
@@ -29,8 +27,20 @@ class MilestonesController < ApplicationController
 
     def project_index 
         milestones = Milestone.where(project_id: params[:id])
+        project_milestones = milestones.sort { |a,b| a.due_date <=> b.due_date } 
+        #binding.pry
+        render json: project_milestones
+    end
 
-        render json: milestones
+    def user_milestones 
+        user = User.find_by(id: params[:id])
+        milestones = user.milestones.sort { |a,b| a.due_date <=> b.due_date } 
+        #binding.pry
+        if milestones != []
+            render json: milestones
+        else 
+            render json: {status: "error", code: 3000, message: "Can't find purchases without start and end date"}
+        end
     end
 
     def delete 
@@ -38,5 +48,12 @@ class MilestonesController < ApplicationController
         milestone = Milestone.find_by(id: params[:id])
         milestone.destroy
 
+    end
+
+    private 
+
+    def milestone_params 
+
+        params.require(:milestone).permit(:name, :description, :project_id)
     end
 end
